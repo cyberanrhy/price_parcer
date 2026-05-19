@@ -1,34 +1,19 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/python-3.10%2B-blue?style=flat-square" alt="Python">
-  <img src="https://img.shields.io/badge/pyqt6-6.5%2B-blueviolet?style=flat-square" alt="PyQt6">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/platform-Windows%2010%2F11-lightgrey?style=flat-square" alt="Platform">
-  <img src="https://img.shields.io/github/v/release/cyberanrhy/price_parcer?style=flat-square" alt="Release">
-  <img src="https://img.shields.io/badge/status-stable-brightgreen?style=flat-square" alt="Status">
-</p>
+# 🔧 Проценка · price_parcer
 
-<h1 align="center">🔧 Проценка · price_parcer</h1>
+**Бесплатный парсер цен автозапчастей** — одновременный поиск по 7 поставщикам, сравнение цен, корзина поставщика.
 
-<p align="center">
-  <b>Бесплатный парсер цен автозапчастей</b><br>
-  Одновременный поиск по 7 поставщикам · Сравнение · Заказ
-</p>
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)]()
+[![PyQt6](https://img.shields.io/badge/pyqt6-6.5%2B-blueviolet)]()
+[![License](https://img.shields.io/badge/license-MIT-green)]()
+[![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-lightgrey)]()
+[![Release](https://img.shields.io/github/v/release/cyberanrhy/price_parcer)]()
+[![Status](https://img.shields.io/badge/status-stable-brightgreen)]()
 
-<p align="center">
-  <a href="https://github.com/cyberanrhy/price_parcer/releases"><b>📥 Скачать .exe</b></a>
-  &nbsp;·&nbsp;
-  <a href="#-быстрый-старт"><b>🚀 Быстрый старт</b></a>
-  &nbsp;·&nbsp;
-  <a href="#-поддерживаемые-поставщики"><b>📦 Поставщики</b></a>
-</p>
+[📥 Скачать .exe](https://github.com/cyberanrhy/price_parcer/releases) · [🚀 Быстрый старт](#-быстрый-старт) · [📦 Поставщики](#-поддерживаемые-поставщики)
 
-<br>
+---
 
-<p align="center">
-  <img src="screenshots/main_window.png" alt="Скриншот программы" width="800">
-</p>
-
-<br>
+![Скриншот программы](screenshots/main_window.png)
 
 ---
 
@@ -42,18 +27,16 @@
 
 ## ✨ Возможности
 
-| | |
-|---|---|
-| 🔍 **Параллельный поиск** | Одновременный запрос ко всем подключённым поставщикам |
-| 📊 **Сравнение цен** | Единая таблица с сортировкой по цене, сроку, поставщику |
-| 💰 **Наценка** | Автоматический расчёт продажной цены |
-| 🛒 **Корзина поставщика** | Добавление позиций напрямую в заказ |
-| 📜 **История поиска** | Автодополнение при вводе |
-| 🚫 **Чёрный список брендов** | Исключение ненужных производителей |
-| 📈 **Фильтр поставки Emex** | Только позиции с поставкой ≥50% |
-| ⏱ **Тайминги запросов** | Сколько времени ответил каждый поставщик |
-| 🌐 **Проверка IP** | Контроль белого IP поставщика |
-| 🌙 **Тёмная тема** | Автоматически подстраивается под систему |
+- 🔍 **Параллельный поиск** — одновременный запрос ко всем подключённым поставщикам
+- 📊 **Сравнение цен** — единая таблица с сортировкой по цене, сроку, поставщику
+- 💰 **Наценка** — автоматический расчёт продажной цены
+- 🛒 **Корзина поставщика** — добавление позиций напрямую в заказ
+- 📜 **История поиска** — автодополнение при вводе
+- 🚫 **Чёрный список брендов** — исключение ненужных производителей
+- 📈 **Фильтр поставки Emex** — только позиции с поставкой ≥50%
+- ⏱ **Тайминги запросов** — сколько времени ответил каждый поставщик
+- 🌐 **Проверка IP** — контроль белого IP поставщика
+- 🌙 **Тёмная тема** — автоматически подстраивается под систему
 
 ---
 
@@ -61,13 +44,13 @@
 
 | Поставщик | API | Поиск | Корзина |
 |-----------|-----|:-----:|:-------:|
-| [Emex](https://emex.ru) (ws.emex.ru) | SOAP (zeep) | ✅ | ✅ |
-| [Profit-League](https://pr-lg.ru) (pr-lg.ru) | REST | ✅ | ✅ |
-| [Автосоюз](https://avtoso-yz.ru) (avtoso-yz.ru) | REST | ✅ | ✅ |
-| [Armtek](https://armtek.su) (armtek.su) | REST | ✅ | ✅ |
-| [Forum-Auto](https://forum-auto.ru) (forum-auto.ru) | REST | ✅ | ✅ |
-| [Mikado](https://mikado.su) (mikado.su) | HTTP + XML | ✅ | ✅ |
-| [ABSTD](https://abstd.ru) (abstd.ru) | REST (md5) | ✅ | ✅ |
+| Emex (ws.emex.ru) | SOAP (zeep) | ✅ | ✅ |
+| Profit-League (pr-lg.ru) | REST | ✅ | ✅ |
+| Автосоюз (avtoso-yz.ru) | REST | ✅ | ✅ |
+| Armtek (armtek.su) | REST | ✅ | ✅ |
+| Forum-Auto (forum-auto.ru) | REST | ✅ | ✅ |
+| Mikado (mikado.su) | HTTP + XML | ✅ | ✅ |
+| ABSTD (abstd.ru) | REST (md5) | ✅ | ✅ |
 
 > ⚠️ Все поставщики требуют, чтобы ваш IP был внесён в белый список в их личном кабинете.
 
@@ -123,7 +106,7 @@ auto-py-to-exe
 
 ## 🧱 Структура проекта
 
-```
+```text
 price_parcer/
 ├── main.py              # GUI приложение (PyQt6)
 ├── settings_page.py     # Страница настроек
@@ -160,7 +143,4 @@ price_parcer/
 
 ---
 
-<p align="center">
-  <sub>Сделано для сообщества авторазбора</sub><br>
-  <sub>⭐ Если проект полезен — поставьте звезду</sub>
-</p>
+*Сделано для сообщества авторазбора. ⭐ Если проект полезен — поставьте звезду.*
