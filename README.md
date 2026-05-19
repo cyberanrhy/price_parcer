@@ -1,6 +1,6 @@
-# 🔧 Проценка · price_parcer
+# price_parcer
 
-**Бесплатный парсер цен автозапчастей** — одновременный поиск по 7 поставщикам, сравнение цен, корзина поставщика.
+**Free cross-supplier auto parts price parser.** Search across 7 Russian auto parts suppliers simultaneously — compare prices, delivery times, and minimum order quantities in one window.
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![PyQt6](https://img.shields.io/badge/pyqt6-6.5%2B-blueviolet)]()
@@ -9,138 +9,109 @@
 [![Release](https://img.shields.io/github/v/release/cyberanrhy/price_parcer)]()
 [![Status](https://img.shields.io/badge/status-stable-brightgreen)]()
 
-[📥 Скачать .exe](https://github.com/cyberanrhy/price_parcer/releases) · [🚀 Быстрый старт](#-быстрый-старт) · [📦 Поставщики](#-поддерживаемые-поставщики)
+[Download .exe](https://github.com/cyberanrhy/price_parcer/releases)
 
 ---
 
-![Скриншот программы](screenshots/main_window.jpg)
+![Screenshot](screenshots/main_window.jpg)
 
 ---
 
-## 📌 О проекте
+## About
 
-**Проценка** — это десктоп-приложение для поиска и сравнения цен на автозапчасти через API российских поставщиков. В одном окне вы видите цены, сроки доставки и кратность от Emex, Profit-League, Автосоюза, Armtek и других — и можете сразу отправить деталь в корзину поставщика.
+**price_parcer** (Проценка) is a desktop application for auto parts professionals. It queries multiple supplier APIs in parallel, displays prices with markup, and allows adding items directly to the supplier's cart.
 
-Проект создан для пользователей **Skitchen PRO** и всех, кто профессионально занимается подбором автозапчастей.
+Built primarily for **Skitchen PRO** users, but works as a standalone multi-supplier API client.
 
----
+## Features
 
-## ✨ Возможности
+- Parallel search across all enabled suppliers
+- Price comparison table with sorting
+- Automatic markup calculation
+- Direct cart/order integration
+- Search history with autocomplete
+- Brand blacklist
+- Emex delivery filter (hide items with <50% delivery)
+- Per-supplier request timing
+- White IP verification
+- Dark theme (follows system settings)
 
-- 🔍 **Параллельный поиск** — одновременный запрос ко всем подключённым поставщикам
-- 📊 **Сравнение цен** — единая таблица с сортировкой по цене, сроку, поставщику
-- 💰 **Наценка** — автоматический расчёт продажной цены
-- 🛒 **Корзина поставщика** — добавление позиций напрямую в заказ
-- 📜 **История поиска** — автодополнение при вводе
-- 🚫 **Чёрный список брендов** — исключение ненужных производителей
-- 📈 **Фильтр поставки Emex** — только позиции с поставкой ≥50%
-- ⏱ **Тайминги запросов** — сколько времени ответил каждый поставщик
-- 🌐 **Проверка IP** — контроль белого IP поставщика
-- 🌙 **Тёмная тема** — автоматически подстраивается под систему
+## Supported Suppliers
 
----
+| Supplier | API Type | Search | Cart |
+|----------|----------|--------|------|
+| Emex (ws.emex.ru) | SOAP (zeep) | Yes | Yes |
+| Profit-League (pr-lg.ru) | REST | Yes | Yes |
+| Avtosoyuz (avtoso-yz.ru) | REST | Yes | Yes |
+| Armtek (armtek.su) | REST | Yes | Yes |
+| Forum-Auto (forum-auto.ru) | REST | Yes | Yes |
+| Mikado (mikado.su) | HTTP + XML | Yes | Yes |
+| ABSTD (abstd.ru) | REST (md5) | Yes | Yes |
 
-## 🏪 Поддерживаемые поставщики
+> All suppliers require your IP to be whitelisted in their admin panel.
 
-| Поставщик | API | Поиск | Корзина |
-|-----------|-----|:-----:|:-------:|
-| Emex (ws.emex.ru) | SOAP (zeep) | ✅ | ✅ |
-| Profit-League (pr-lg.ru) | REST | ✅ | ✅ |
-| Автосоюз (avtoso-yz.ru) | REST | ✅ | ✅ |
-| Armtek (armtek.su) | REST | ✅ | ✅ |
-| Forum-Auto (forum-auto.ru) | REST | ✅ | ✅ |
-| Mikado (mikado.su) | HTTP + XML | ✅ | ✅ |
-| ABSTD (abstd.ru) | REST (md5) | ✅ | ✅ |
+## Quick Start
 
-> ⚠️ Все поставщики требуют, чтобы ваш IP был внесён в белый список в их личном кабинете.
+### Option 1: Download pre-built exe
 
----
+Download [price_parcer.exe](https://github.com/cyberanrhy/price_parcer/releases/latest) and run it. The settings page will open on first launch.
 
-## 🚀 Быстрый старт
+### Option 2: Run from source
 
-### Вариант 1: готовый exe
-
-1. Скачайте [price_parcer.exe](https://github.com/cyberanrhy/price_parcer/releases/latest)
-2. Запустите — откроется страница настроек
-3. Заполните данные поставщиков, нажмите «Сохранить»
-4. На главной странице введите артикул и нажмите Enter
-
-### Вариант 2: из исходного кода
-
-```bash
+```
 git clone https://github.com/cyberanrhy/price_parcer.git
 cd price_parcer
 pip install -r requirements.txt
 python main.py
 ```
 
-### Вариант 3: сборка exe самостоятельно
+## Configuration
 
-```bash
-pip install auto-py-to-exe
-auto-py-to-exe
+On first launch, the settings page appears. For each supplier:
+
+1. Enable with the checkbox
+2. Enter credentials (login/password or API key)
+3. Click Save
+
+Config files are stored locally:
+- `.py` mode: `config/settings.json`
+- `.exe` mode: `%APPDATA%\Проценка\settings.json`
+
+## Tech Stack
+
+Python 3.10+ · PyQt6 · requests · zeep (SOAP) · concurrent.futures
+
+## Project Structure
+
 ```
-
-Настройки: onefile, window-based (без консоли).
-
----
-
-## ⚙️ Настройка поставщиков
-
-При первом запуске откроется страница настроек. Для каждого поставщика нужно:
-
-1. Включить его чекбоксом
-2. Ввести учётные данные:
-   - **Emex** — логин и пароль от ws.emex.ru
-   - **Profit-League** — secret key из настроек API
-   - **Автосоюз** — логин и пароль
-   - **Armtek** — логин, пароль, VKORG, KUNNR_RG
-   - **Forum-Auto**, **Mikado**, **ABSTD** — данные от ЛК
-3. Нажать «Сохранить»
-
-Данные хранятся локально:
-- В режиме `.py`: `config/settings.json`
-- В режиме `.exe`: `%APPDATA%\Проценка\settings.json`
-
----
-
-## 🧱 Структура проекта
-
-```text
 price_parcer/
-├── main.py              # GUI приложение (PyQt6)
-├── settings_page.py     # Страница настроек
-├── config_path.py       # Пути к конфигам
-├── emex.py              # Провайдер Emex (SOAP)
-├── pr_lg.py             # Провайдер Profit-League (REST)
-├── avtosoyuz.py         # Провайдер Автосоюз (REST)
-├── armtek.py            # Провайдер Armtek (REST)
-├── forum_auto.py        # Провайдер Forum-Auto (REST)
-├── mikado.py            # Провайдер Mikado (HTTP+XML)
-├── abstd.py             # Провайдер ABSTD (REST)
-├── screenshots/         # Скриншоты
-├── config/              # Локальные настройки (в .gitignore)
-├── requirements.txt     # Зависимости
-└── *-api.md             # Документация API поставщиков
+  main.py                  # GUI (PyQt6)
+  settings_page.py         # Settings widget
+  config_path.py           # Config path resolver
+  emex.py                  # Emex SOAP provider
+  pr_lg.py                 # Profit-League REST provider
+  avtosoyuz.py             # Avtosoyuz REST provider
+  armtek.py                # Armtek REST provider
+  forum_auto.py            # Forum-Auto REST provider
+  mikado.py                # Mikado HTTP+XML provider
+  abstd.py                 # ABSTD REST provider
+  screenshots/             # Screenshots
+  config/                  # Local config (gitignored)
+  requirements.txt         # Dependencies
+  *-api.md                 # Supplier API docs
 ```
 
-**Стек:** Python 3.10+ · PyQt6 · requests · zeep (SOAP) · concurrent.futures
+## Security
+
+- All credentials are stored **locally only**
+- Source code contains **no** hardcoded keys or passwords
+- No third-party data sharing
+- The app connects only to supplier APIs
+
+## License
+
+MIT — free to use, modify, and distribute.
 
 ---
 
-## 🔐 Безопасность
-
-- Все учётные данные хранятся **только на вашем компьютере**
-- Исходный код **не содержит** тестовых или реальных ключей доступа
-- Данные не передаются третьим лицам
-- Программа подключается только к API поставщиков
-
----
-
-## 📄 Лицензия
-
-Распространяется под лицензией **MIT**. Можно использовать, изменять и распространять без ограничений.
-
----
-
-*Сделано для сообщества авторазбора. ⭐ Если проект полезен — поставьте звезду.*
+*Built for the auto parts community. Star the repo if you find it useful.*
