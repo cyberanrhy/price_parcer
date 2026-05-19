@@ -13,7 +13,7 @@
 
 ---
 
-![Скриншот программы](screenshots/main_window.png)
+![Скриншот программы](screenshots/main_window.jpg)
 
 ---
 
