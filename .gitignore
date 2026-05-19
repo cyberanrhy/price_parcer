@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.spec
+*.bak
+*.log
+
+# Build output
+dist/
+build/
+
+# Config (contains credentials)
+config/
+
+# IDE / local config
+.opencode/
+
+# OS
+.DS_Store
+Thumbs.db
