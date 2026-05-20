@@ -9,7 +9,7 @@ import requests
 from PyQt6.QtCore import Qt, pyqtSignal, QRectF, QTimer, QUrl
 from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QDesktopServices
 
-VERSION = "1.0.0"
+VERSION = "1.0.2"
 
 from config_path import get_settings_path, get_history_path, get_config_dir
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
@@ -550,14 +550,16 @@ class SkitchenApp(QMainWindow):
         # снимаем флаг первого запуска
         import json as _json
         path = get_settings_path()
+        self.add_log(f"Пытаюсь сохранить настройки: {path}")
         try:
             with open(path, encoding="utf-8") as f:
                 cfg = _json.load(f)
             cfg["first_run"] = False
             with open(path, "w", encoding="utf-8") as f:
                 _json.dump(cfg, f, indent=2, ensure_ascii=False)
-        except:
-            pass
+            self.add_log("Флаг first_run успешно установлен в False")
+        except Exception as e:
+            self.add_log(f"ОШИБКА записи настроек: {e}")
         self.first_run = False
         self.switch_to_settings()
 
