@@ -84,7 +84,7 @@ python main.py
 
 Данные сохраняются локально:
 - В режиме `.py`: `config/settings.json`
-- В режиме `.exe`: `%APPDATA%\Проценка\settings.json`
+- В режиме `.exe`: `%APPDATA%\price_parcer\settings.json`
 
 ## 📦 Сборка exe
 
