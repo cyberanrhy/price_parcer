@@ -65,7 +65,7 @@ python main.py
 
 ### Готовый exe (Windows)
 
-Скачайте последний релиз со страницы [Releases](https://github.com/cyberanrhy/price_parcer/releases) — файл `Проценка.exe`. Запускайте без установки.
+Скачайте последний релиз со страницы [Releases](https://github.com/cyberanrhy/price_parcer/releases) — файл `price_parcer.exe`. Запускайте без установки.
 
 > ⚠️ Все поставщики требуют, чтобы ваш IP был внесён в белый список в личном кабинете каждого поставщика.
 
@@ -88,12 +88,24 @@ python main.py
 
 ## 📦 Сборка exe
 
+### Способ 1: Автоматизированный (Рекомендуется)
+Если у вас установлен Python, выполните команду в папке проекта:
+
+```bash
+pip install pyinstaller
+pyinstaller --noconsole --onefile --name "price_parcer" main.py
+```
+Готовый файл появится в папке `dist/`.
+
+### Способ 2: Через интерфейс (Auto PY to EXE)
+Если вы хотите визуально настроить параметры сборки:
+
 ```bash
 pip install auto-py-to-exe
 auto-py-to-exe
 ```
 
-Настройки: onefile, window-based (без консоли), включить необходимые библиотеки.
+Настройки в программе: `Onefile`, `Window-based` (скрыть консоль).
 
 ## 🔐 Безопасность
 
