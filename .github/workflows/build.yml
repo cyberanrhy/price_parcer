@@ -1,0 +1,30 @@
+name: Build Price Parcer EXE
+on:
+  push:
+    tags:
+      - 'v*' # Запускать при создании тега v*
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+      - name: Build with PyInstaller
+        run: pyinstaller --noconsole --onefile --name "price_parcer" main.py
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: price_parcer_exe
+          path: dist/price_parcer.exe
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/price_parcer.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
