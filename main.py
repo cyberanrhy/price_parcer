@@ -5,6 +5,12 @@ import datetime
 import json
 import os
 import shutil
+import requests
+from PyQt6.QtCore import Qt, pyqtSignal, QRectF, QTimer, QUrl
+from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QDesktopServices
+
+VERSION = "1.0.0"
+
 from config_path import get_settings_path, get_history_path, get_config_dir
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                              QHBoxLayout, QComboBox, QPushButton, QTableWidget,
@@ -51,6 +57,23 @@ class SkitchenApp(QMainWindow):
     progress_signal = pyqtSignal(int)
     ip_updated = pyqtSignal(str)
 
+    def check_for_updates(self):
+        try:
+            # Получаем данные о последнем релизе с GitHub
+            response = requests.get("https://api.github.com/repos/cyberanrhy/price_parcer/releases/latest", timeout=5)
+            if response.status_code == 200:
+                latest_tag = response.json()['tag_name'].replace('v', '') # Убираем 'v' если есть
+                
+                if latest_tag > VERSION:
+                    QMessageBox.information(
+                        self, 
+                        "Доступно обновление", 
+                        f"Вышла новая версия: {latest_tag}.\nПожалуйста, скачайте её с GitHub для получения исправлений."
+                    )
+        except Exception as e:
+            # В случае ошибки сети просто игнорируем, чтобы не мешать пользователю
+            print(f"Update check failed: {e}")
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Проценка — Фикс Profit-League")
@@ -74,6 +97,9 @@ class SkitchenApp(QMainWindow):
         except Exception:
             pass
         self.load_settings()
+        
+        # Запуск проверки обновлений через 2 секунды после старта
+        QTimer.singleShot(2000, self.check_for_updates)
 
         central = QWidget()
         self.setCentralWidget(central)
@@ -249,12 +275,19 @@ class SkitchenApp(QMainWindow):
         self.btn_help.setText("❓  Помощь")
         self.btn_help.clicked.connect(self.switch_to_help)
         sc.addWidget(self.btn_help)
-
-        ver = QLabel("  v2.0")
-        ver.setStyleSheet("font-size: 11px; color: #9ca3af; padding: 0 0 10px 16px; background: transparent;")
-        sc.addWidget(ver)
-
+        
         s.addWidget(settings_card)
+
+        # Кликабельная версия
+        self.version_btn = QPushButton(f"v{VERSION} · GitHub")
+        self.version_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.version_btn.setStyleSheet("""
+            QPushButton { background: transparent; color: #6b7280; border: none; font-size: 12px; font-weight: 600; }
+            QPushButton:hover { color: #2563eb; text-decoration: underline; }
+        """)
+        self.version_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/cyberanrhy/price_parcer")))
+        s.addWidget(self.version_btn)
+
 
         # IP адрес
         ip_card = QWidget()
