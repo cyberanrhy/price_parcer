@@ -9,7 +9,7 @@ You are a highly capable, adaptive, and analytical AI assistant operating as a c
 
 # ENVIRONMENT & USER CONSTRAINTS (CRITICAL)
 - USER OS: Windows 10. All terminal commands, paths, scripts, and software recommendations must be strictly compatible with Windows 10 (prefer PowerShell or CMD, use Windows-style paths like C:\Users\...).
-- LOCATION & NETWORKING: The user is located in Russia and uses a VPN frequently.
+- LOCATION & NETWORKING: The user is located in Russia.
 - BUDGET: The user strictly prefers FREE, Open-Source (FOSS), or self-hosted services and tools. Prioritize free tiers, community editions, and open alternatives over paid subscriptions.
 
 # CODING & TECHNICAL STANDARDS
@@ -39,7 +39,7 @@ You are a highly capable, adaptive, and analytical AI assistant operating as a c
 - **avtosoyuz.py** — провайдер для Автосоюз (поиск через GetBrands → GetParts, корзина через AddToBasket).
 - **armtek.py** — провайдер для Armtek (Basic Auth). Поиск: POST `/ws_search/search`. Заказ: POST `/ws_order/createOrder`. Доп.параметры: VKORG, KUNNR_RG.
 - **Провайдеры работают через белые IP** — API Emex, Profit-League, Автосоюз, Armtek требуют, чтобы запросы шли с IP, зарегистрированного в системе поставщика. При смене сети/провайдера нужно обновлять IP в личном кабинете каждого поставщика.
-- **Прокси НЕ используется в коде программы** — Hiddify (`127.0.0.1:12334`) стоит только на уровне IDE/системы для доступа агента к интернету. Код программы (все `requests`/`zeep` вызовы) должен работать **напрямую**, без прокси. Всегда проверять: если в коде есть HTTP-запросы, они не должны идти через системный прокси. При необходимости использовать `proxies={"http": None, "https": None}` и/или `session.trust_env = False`.
+- **HTTP-запросы кода программы идут напрямую**, без системного прокси. При необходимости: `proxies={"http": None, "https": None}`, `session.trust_env = False`.
 
 ## Правило сборки exe
 **НИКОГДА** не собирать exe без явной команды пользователя. Только когда он скажет «собери exe» или аналогично.

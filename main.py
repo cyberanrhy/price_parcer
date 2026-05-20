@@ -4,6 +4,7 @@ import threading
 import datetime
 import json
 import os
+import shutil
 from config_path import get_settings_path, get_history_path, get_config_dir
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                              QHBoxLayout, QComboBox, QPushButton, QTableWidget,
@@ -61,6 +62,17 @@ class SkitchenApp(QMainWindow):
             QLabel { color: #1d1d1f; }
         """)
 
+
+        backup_dir = os.path.join(os.getcwd(), "backups")
+        try:
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+            ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            for f in ["config/settings.json", "main.py", "settings_page.py"]:
+                if os.path.exists(f):
+                    shutil.copy2(f, os.path.join(backup_dir, os.path.basename(f) + ".backup_" + ts))
+        except Exception:
+            pass
         self.load_settings()
 
         central = QWidget()
@@ -795,6 +807,17 @@ class SkitchenApp(QMainWindow):
         return page
 
     def on_settings_saved(self):
+
+        backup_dir = os.path.join(os.getcwd(), "backups")
+        try:
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+            ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            for f in ["config/settings.json", "main.py", "settings_page.py"]:
+                if os.path.exists(f):
+                    shutil.copy2(f, os.path.join(backup_dir, os.path.basename(f) + ".backup_" + ts))
+        except Exception:
+            pass
         self.load_settings()
         self._update_sidebar_providers()
         if self.displayed_data:

@@ -13,6 +13,9 @@ build/
 # Config (contains credentials)
 config/
 
+# Backups (local only)
+backups/
+
 # IDE / local config
 .opencode/
 
