@@ -91,6 +91,9 @@ class EmexProvider:
                 ePrices=ArrayOfEPrice([eprice])
             )
 
-            return {"success": True, "data": str(result)}
+            if comment and comment.strip():
+                return {"success": True, "data": "товар добавлен в корзину (Emex не поддерживает комментарии через API)", "comment_warning": True}
+            return {"success": True, "data": "товар добавлен в корзину"}</iri_param>
+
         except Exception as e:
             return {"success": False, "error": str(e)}
