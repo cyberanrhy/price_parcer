@@ -1,9 +1,12 @@
 name: Build Price Parcer EXE
 on:
   push:
+    branches:
+      - master
     tags:
-      - 'v*' # Запускать при создании тега v*
-
+      - 'v*'
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: windows-latest
@@ -17,6 +20,8 @@ jobs:
         run: pip install -r requirements.txt pyinstaller
       - name: Build with PyInstaller
         run: pyinstaller --noconsole --onefile --name "price_parcer" main.py
+      - name: Debug files
+        run: dir dist/
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
