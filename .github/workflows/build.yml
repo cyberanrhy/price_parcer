@@ -20,14 +20,13 @@ jobs:
         run: pip install -r requirements.txt pyinstaller
       - name: Build with PyInstaller
         run: pyinstaller --noconsole --onefile --name "price_parcer" main.py
-      - name: Debug files
-        run: dir dist/
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: price_parcer_exe
           path: dist/price_parcer.exe
       - name: Create Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: dist/price_parcer.exe
