@@ -1,4 +1,4 @@
-import zeep
+﻿import zeep
 from zeep.transports import Transport
 import requests
 import urllib3
@@ -40,12 +40,12 @@ class EmexProvider:
                         results.append({
                             "provider": "EMEX",
                             "article": article,
-                            "brand": getattr(item, 'MakeName', 'Н/Д'),
+                            "brand": getattr(item, 'MakeName', 'Рќ/Р”'),
                             "price": float(getattr(item, 'ResultPrice', 0)),
                             "days": int(getattr(item, 'ADDays', 999)),
                             "quantity": str(getattr(item, 'Quantity', '0')),
                             "logo": getattr(item, 'PriceLogo', '???'),
-                            "name": getattr(item, 'DetailNameRus', 'Н/Д'),
+                            "name": getattr(item, 'DetailNameRus', 'Рќ/Р”'),
                             "dlogo": getattr(item, 'DetailLogo', ''),
                             "ref": getattr(item, 'DetailRef', ''),
                             "plogo": getattr(item, 'PriceLogo', ''),
@@ -53,12 +53,12 @@ class EmexProvider:
                             "multiplicity": int(getattr(item, 'LotQuantity', 1))
                         })
         except Exception as e:
-            print(f"Ошибка в модуле Emex: {e}")
+            print(f"РћС€РёР±РєР° РІ РјРѕРґСѓР»Рµ Emex: {e}")
         
         return results
 
     def add_to_basket(self, item, quantity=1, comment=""):
-        """Добавление товара в корзину Emex через EmEx_Basket.asmx"""
+        """Р”РѕР±Р°РІР»РµРЅРёРµ С‚РѕРІР°СЂР° РІ РєРѕСЂР·РёРЅСѓ Emex С‡РµСЂРµР· EmEx_Basket.asmx"""
         try:
             session = requests.Session()
             session.trust_env = False
@@ -76,7 +76,7 @@ class EmexProvider:
                 DNum=item.get("article", ""),
                 Ref=item.get("ref", ""),
                 Name=item.get("name", ""),
-                Comment=comment[:255],</iri_param>
+                Comment=comment[:255],
 
                 Quan=str(quantity),
                 Price=str(item.get("price", "0")),
@@ -92,7 +92,7 @@ class EmexProvider:
                 ePrices=ArrayOfEPrice([eprice])
             )
 
-            return {"success": True, "data": "товар добавлен в корзину"}</iri_param>
+            return {"success": True, "data": "С‚РѕРІР°СЂ РґРѕР±Р°РІР»РµРЅ РІ РєРѕСЂР·РёРЅСѓ"}
 
         except Exception as e:
             return {"success": False, "error": str(e)}
