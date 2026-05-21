@@ -76,7 +76,8 @@ class EmexProvider:
                 DNum=item.get("article", ""),
                 Ref=item.get("ref", ""),
                 Name=item.get("name", ""),
-                Com=comment[:255],
+                Comment=comment[:255],</iri_param>
+
                 Quan=str(quantity),
                 Price=str(item.get("price", "0")),
                 PLogo=item.get("plogo", ""),
@@ -91,8 +92,6 @@ class EmexProvider:
                 ePrices=ArrayOfEPrice([eprice])
             )
 
-            if comment and comment.strip():
-                return {"success": True, "data": "товар добавлен в корзину (Emex не поддерживает комментарии через API)", "comment_warning": True}
             return {"success": True, "data": "товар добавлен в корзину"}</iri_param>
 
         except Exception as e:

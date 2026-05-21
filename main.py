@@ -1245,12 +1245,8 @@ class SkitchenApp(QMainWindow):
         try:
             result = provider.add_to_basket(item, quantity=qty, comment=comment)
             if result.get("success"):
-                msg = result.get('data', 'OK')
-                if result.get('comment_warning'):
-                    self.log_signal.emit(f"УСПЕХ: {msg}")
-                    self.log_signal.emit("ВНИМАНИЕ: Emex не сохраняет комментарии через API. Комментарий будет виден только в программе.")
-                else:
-                    self.log_signal.emit(f"УСПЕХ: {msg}")
+                self.log_signal.emit(f"УСПЕХ: {result.get('data', 'OK')}")</iri_param>
+
             else:
                 self.log_signal.emit(f"ОШИБКА: {result.get('error', 'неизвестная ошибка')}")</iri_param>
 
