@@ -37,7 +37,7 @@ class SettingsPage(QWidget):
             "armtek": {"enabled": True, "login": "", "password": "", "vkorg": "", "kunnr": ""},
             "forum_auto": {"enabled": True, "login": "", "password": ""},
             "mikado": {"enabled": True, "login": "", "password": ""},
-            "abstd": {"enabled": True, "login": "", "password": "", "agreement_id": ""},
+            "abstd": {"enabled": True, "login": "", "password": "", "agreement_id": ""},            "1c": {"enabled": False, "conn_string": "", "login": "", "password": ""},
             "default_markup": 0,
             "default_comment": "",
             "expected_ip": "",
@@ -86,7 +86,7 @@ class SettingsPage(QWidget):
 
         # --- Header ---
         header = QHBoxLayout()
-        self.btn_back = QPushButton("← Назад")
+        self.btn_back = QPushButton("в†ђ РќР°Р·Р°Рґ")
         self.btn_back.setStyleSheet("""
             QPushButton { background: transparent; color: #2563eb; font-size: 13px; font-weight: 600;
                           border: none; padding: 4px 10px; }
@@ -95,12 +95,12 @@ class SettingsPage(QWidget):
         self.btn_back.clicked.connect(self.back_requested.emit)
         header.addWidget(self.btn_back)
 
-        title = QLabel("Настройки API")
+        title = QLabel("РќР°СЃС‚СЂРѕР№РєРё API")
         title.setStyleSheet("font-size: 18px; font-weight: 700; color: #1d1d1f;")
         header.addWidget(title)
         header.addStretch()
 
-        self.btn_save_top = QPushButton("Сохранить")
+        self.btn_save_top = QPushButton("РЎРѕС…СЂР°РЅРёС‚СЊ")
         self.btn_save_top.setMinimumHeight(34)
         self.btn_save_top.setStyleSheet("""
             QPushButton { background: #2563eb; color: white; font-size: 12px; font-weight: 700;
@@ -113,23 +113,23 @@ class SettingsPage(QWidget):
 
         layout.addLayout(header)
 
-        # --- Комментарий по умолчанию (в самый верх) ---
-        self._add_section_header(layout, "КОММЕНТАРИЙ ПО УМОЛЧАНИЮ")
+        # --- РљРѕРјРјРµРЅС‚Р°СЂРёР№ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РІ СЃР°РјС‹Р№ РІРµСЂС…) ---
+        self._add_section_header(layout, "РљРћРњРњР•РќРўРђР РР™ РџРћ РЈРњРћР›Р§РђРќРР®")
         self.default_comment = QLineEdit()
-        self.default_comment.setPlaceholderText("Комментарий к позиции в корзине...")
+        self.default_comment.setPlaceholderText("РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє РїРѕР·РёС†РёРё РІ РєРѕСЂР·РёРЅРµ...")
         layout.addWidget(self.default_comment)
 
-        # --- Жирный разделитель ---
+        # --- Р–РёСЂРЅС‹Р№ СЂР°Р·РґРµР»РёС‚РµР»СЊ ---
         big_sep = QFrame()
         big_sep.setFrameShape(QFrame.Shape.HLine)
         big_sep.setStyleSheet("background: #d2d2d7; max-height: 2px; margin: 6px 0;")
         layout.addWidget(big_sep)
 
-        # --- Наценка по умолчанию ---
-        self._add_section_header(layout, "НАЦЕНКА ПО УМОЛЧАНИЮ")
+        # --- РќР°С†РµРЅРєР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ ---
+        self._add_section_header(layout, "РќРђР¦Р•РќРљРђ РџРћ РЈРњРћР›Р§РђРќРР®")
         row_markup = QHBoxLayout()
         row_markup.setSpacing(6)
-        row_markup.addWidget(QLabel("Наценка:"))
+        row_markup.addWidget(QLabel("РќР°С†РµРЅРєР°:"))
         self.default_markup = QDoubleSpinBox()
         self.default_markup.setRange(0, 999)
         self.default_markup.setSingleStep(0.5)
@@ -139,16 +139,16 @@ class SettingsPage(QWidget):
         row_markup.addWidget(self.default_markup, 1)
         layout.addLayout(row_markup)
 
-        # --- Ожидаемый IP ---
-        self._add_section_header(layout, "ОЖИДАЕМЫЙ IP")
+        # --- РћР¶РёРґР°РµРјС‹Р№ IP ---
+        self._add_section_header(layout, "РћР–РР”РђР•РњР«Р™ IP")
         row_ip = QHBoxLayout()
         row_ip.setSpacing(6)
-        row_ip.addWidget(QLabel("IP адрес:"))
+        row_ip.addWidget(QLabel("IP Р°РґСЂРµСЃ:"))
         self.expected_ip = QLineEdit()
-        self.expected_ip.setPlaceholderText("Например: 95.24.137.82")
+        self.expected_ip.setPlaceholderText("РќР°РїСЂРёРјРµСЂ: 95.24.137.82")
         row_ip.addWidget(self.expected_ip, 1)
 
-        self.btn_detect_ip = QPushButton("Определить")
+        self.btn_detect_ip = QPushButton("РћРїСЂРµРґРµР»РёС‚СЊ")
         self.btn_detect_ip.setFixedHeight(30)
         self.btn_detect_ip.setStyleSheet("""
             QPushButton { background: #e5e7eb; color: #374151; padding: 4px 12px; font-size: 11px;
@@ -160,73 +160,73 @@ class SettingsPage(QWidget):
         row_ip.addWidget(self.btn_detect_ip)
 
         layout.addLayout(row_ip)
-        ip_hint = QLabel("Если текущий IP совпадает с ожидаемым — в сайдбаре отображается зелёный индикатор")
+        ip_hint = QLabel("Р•СЃР»Рё С‚РµРєСѓС‰РёР№ IP СЃРѕРІРїР°РґР°РµС‚ СЃ РѕР¶РёРґР°РµРјС‹Рј вЂ” РІ СЃР°Р№РґР±Р°СЂРµ РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ Р·РµР»С‘РЅС‹Р№ РёРЅРґРёРєР°С‚РѕСЂ")
         ip_hint.setStyleSheet("font-size: 11px; color: #9ca3af; margin-left: 2px;")
         layout.addWidget(ip_hint)
 
-        # --- Провайдеры (компактные карточки) ---
+        # --- РџСЂРѕРІР°Р№РґРµСЂС‹ (РєРѕРјРїР°РєС‚РЅС‹Рµ РєР°СЂС‚РѕС‡РєРё) ---
         providers_sep = QFrame()
         providers_sep.setFrameShape(QFrame.Shape.HLine)
         providers_sep.setStyleSheet("background: #e5e7eb; max-height: 1px; margin: 4px 0;")
         layout.addWidget(providers_sep)
-        prov_label = QLabel("ПОСТАВЩИКИ")
+        prov_label = QLabel("РџРћРЎРўРђР’Р©РРљР")
         prov_label.setStyleSheet("font-size: 13px; font-weight: 700; color: #1d1d1f; margin-top: 2px;")
         layout.addWidget(prov_label)
 
         # Emex
         self._add_provider_card(layout, "Emex", [
-            ("login", "Логин:", "text"),
-            ("password", "Пароль:", "password"),
+            ("login", "Р›РѕРіРёРЅ:", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
         ], check_method=self._check_emex, status_attr="emex_status")
 
         # Profit-League
         self._add_provider_card(layout, "Profit-League", [
-            ("api_key", "API-ключ:", "text"),
+            ("api_key", "API-РєР»СЋС‡:", "text"),
         ], check_method=self._check_pl, status_attr="pl_status")
 
-        # Автосоюз
-        self._add_provider_card(layout, "Автосоюз", [
-            ("login", "Логин:", "text"),
-            ("password", "Пароль:", "password"),
+        # РђРІС‚РѕСЃРѕСЋР·
+        self._add_provider_card(layout, "РђРІС‚РѕСЃРѕСЋР·", [
+            ("login", "Р›РѕРіРёРЅ:", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
         ], check_method=self._check_as, status_attr="as_status")
 
         # Armtek
         self._add_provider_card(layout, "Armtek", [
-            ("login", "Логин:", "text"),
-            ("password", "Пароль:", "password"),
+            ("login", "Р›РѕРіРёРЅ:", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
             ("vkorg", "VKORG:", "text"),
             ("kunnr", "KUNNR_RG:", "text"),
         ], check_method=self._check_armtek, status_attr="armtek_status")
 
         # Forum-Auto
         self._add_provider_card(layout, "Forum-Auto", [
-            ("login", "Логин:", "text"),
-            ("password", "Пароль:", "password"),
+            ("login", "Р›РѕРіРёРЅ:", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
         ], check_method=self._check_forum_auto, status_attr="forum_auto_status")
 
         # Mikado
         self._add_provider_card(layout, "Mikado", [
-            ("login", "Логин (код клиента):", "text"),
-            ("password", "Пароль:", "password"),
+            ("login", "Р›РѕРіРёРЅ (РєРѕРґ РєР»РёРµРЅС‚Р°):", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
         ], check_method=self._check_mikado, status_attr="mikado_status")
 
         # ABSTD
         self._add_provider_card(layout, "ABSTD", [
-            ("login", "Логин:", "text"),
-            ("password", "Пароль:", "password"),
-            ("agreement_id", "ID договора:", "text"),
+            ("login", "Р›РѕРіРёРЅ:", "text"),
+            ("password", "РџР°СЂРѕР»СЊ:", "password"),
+            ("agreement_id", "ID РґРѕРіРѕРІРѕСЂР°:", "text"),
         ], check_method=self._check_abstd, status_attr="abstd_status")
 
-        # --- Хранилище ---
-        self._add_section_header(layout, "ХРАНИЛИЩЕ")
-        storage_label = QLabel("● JSON файл")
+        # --- РҐСЂР°РЅРёР»РёС‰Рµ ---
+        self._add_section_header(layout, "РҐР РђРќРР›РР©Р•")
+        storage_label = QLabel("в—Џ JSON С„Р°Р№Р»")
         storage_label.setStyleSheet("font-size: 12px; color: #374151;")
         layout.addWidget(storage_label)
 
         layout.addStretch()
 
         # --- Save button ---
-        self.btn_save = QPushButton("Сохранить")
+        self.btn_save = QPushButton("РЎРѕС…СЂР°РЅРёС‚СЊ")
         self.btn_save.setMinimumHeight(38)
         self.btn_save.setStyleSheet("""
             QPushButton { background: #2563eb; color: white; font-size: 14px; font-weight: 700;
@@ -240,7 +240,7 @@ class SettingsPage(QWidget):
         scroll.setWidget(inner)
         outer.addWidget(scroll)
 
-    # ============ КОМПОНЕНТЫ ============
+    # ============ РљРћРњРџРћРќР•РќРўР« ============
 
     def _add_section_header(self, layout, title):
         sep = QFrame()
@@ -263,7 +263,7 @@ class SettingsPage(QWidget):
         cv.setContentsMargins(0, 0, 0, 0)
         cv.setSpacing(0)
 
-        # заголовок + чекбокс включения
+        # Р·Р°РіРѕР»РѕРІРѕРє + С‡РµРєР±РѕРєСЃ РІРєР»СЋС‡РµРЅРёСЏ
         hdr_row = QHBoxLayout()
         hdr_row.setContentsMargins(12, 6, 12, 2)
         hdr_row.setSpacing(6)
@@ -279,7 +279,7 @@ class SettingsPage(QWidget):
         hdr_row.addStretch()
         cv.addLayout(hdr_row)
 
-        # поля
+        # РїРѕР»СЏ
         field_widgets = {}
         for tag, label_text, field_type, *extra in fields:
             extra_args = extra[0] if extra else {}
@@ -299,12 +299,12 @@ class SettingsPage(QWidget):
             cv.addLayout(row)
             field_widgets[tag] = w
 
-        # кнопка проверки + статус
+        # РєРЅРѕРїРєР° РїСЂРѕРІРµСЂРєРё + СЃС‚Р°С‚СѓСЃ
         if check_method:
             check_row = QHBoxLayout()
             check_row.setContentsMargins(12, 2, 12, 6)
             check_row.setSpacing(6)
-            btn = QPushButton(f"Проверить {title}")
+            btn = QPushButton(f"РџСЂРѕРІРµСЂРёС‚СЊ {title}")
             btn.setFixedHeight(28)
             btn.setStyleSheet("""
                 QPushButton { background: #e5e7eb; color: #374151; padding: 4px 14px; font-size: 11px;
@@ -326,15 +326,15 @@ class SettingsPage(QWidget):
         self._provider_enabled[title] = enable_cb
 
     def _fill_fields(self):
-        # общие
+        # РѕР±С‰РёРµ
         self.default_comment.setText(self.settings_data.get("default_comment", ""))
         self.default_markup.setValue(self.settings_data.get("default_markup", 0))
         self.expected_ip.setText(self.settings_data.get("expected_ip", ""))
-        # провайдеры
+        # РїСЂРѕРІР°Р№РґРµСЂС‹
         mapping = {
             "Emex": "emex",
             "Profit-League": "profit_league",
-            "Автосоюз": "avtosoyuz",
+            "РђРІС‚РѕСЃРѕСЋР·": "avtosoyuz",
             "Armtek": "armtek",
             "Forum-Auto": "forum_auto",
             "Mikado": "mikado",
@@ -353,18 +353,18 @@ class SettingsPage(QWidget):
                 else:
                     w.setText(str(val) if val else "")
 
-    # ============ СТАТУС ============
+    # ============ РЎРўРђРўРЈРЎ ============
 
     def _set_status(self, label, ok, text=""):
         color = "#2e7d32" if ok else "#c62828"
-        icon = "●" if ok else "●"
-        label.setText(f"{icon} {text if text else ('OK' if ok else 'Ошибка')}")
+        icon = "в—Џ" if ok else "в—Џ"
+        label.setText(f"{icon} {text if text else ('OK' if ok else 'РћС€РёР±РєР°')}")
         label.setStyleSheet(f"font-size: 12px; color: {color}; font-weight: 600;")
 
-    # ============ ПРОВЕРКА EMEX ============
+    # ============ РџР РћР’Р•Р РљРђ EMEX ============
 
     def _check_emex(self):
-        self.emex_status.setText("⏳ Проверка...")
+        self.emex_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.emex_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("emex", self._do_check_emex)
 
@@ -379,17 +379,17 @@ class SettingsPage(QWidget):
         self._set_status(self.emex_status, True)
         self._enable_check("emex")
 
-    # ============ ПРОВЕРКА PROFIT-LEAGUE ============
+    # ============ РџР РћР’Р•Р РљРђ PROFIT-LEAGUE ============
 
     def _check_pl(self):
-        self.pl_status.setText("⏳ Проверка...")
+        self.pl_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.pl_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("profit_league", self._do_check_pl)
 
     def _do_check_pl(self):
         key = self._provider_fields["Profit-League"]["api_key"].text()
         if not key:
-            self._set_status(self.pl_status, False, "Ключ пуст")
+            self._set_status(self.pl_status, False, "РљР»СЋС‡ РїСѓСЃС‚")
             self._enable_check("profit_league")
             return
         session = requests.Session()
@@ -406,18 +406,18 @@ class SettingsPage(QWidget):
             self._set_status(self.pl_status, False, f"HTTP {resp.status_code}")
         self._enable_check("profit_league")
 
-    # ============ ПРОВЕРКА АВТОСОЮЗ ============
+    # ============ РџР РћР’Р•Р РљРђ РђР’РўРћРЎРћР®Р— ============
 
     def _check_as(self):
-        self.as_status.setText("⏳ Проверка...")
+        self.as_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.as_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("avtosoyuz", self._do_check_as)
 
     def _do_check_as(self):
-        login = self._provider_fields["Автосоюз"]["login"].text()
-        password = self._provider_fields["Автосоюз"]["password"].text()
+        login = self._provider_fields["РђРІС‚РѕСЃРѕСЋР·"]["login"].text()
+        password = self._provider_fields["РђРІС‚РѕСЃРѕСЋР·"]["password"].text()
         if not login or not password:
-            self._set_status(self.as_status, False, "Логин/пароль пусты")
+            self._set_status(self.as_status, False, "Р›РѕРіРёРЅ/РїР°СЂРѕР»СЊ РїСѓСЃС‚С‹")
             self._enable_check("avtosoyuz")
             return
         import base64
@@ -439,15 +439,15 @@ class SettingsPage(QWidget):
         if resp.status_code == 200:
             self._set_status(self.as_status, True)
         elif resp.status_code == 401:
-            self._set_status(self.as_status, False, "Неверный логин/пароль")
+            self._set_status(self.as_status, False, "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ/РїР°СЂРѕР»СЊ")
         else:
             self._set_status(self.as_status, False, f"HTTP {resp.status_code}")
         self._enable_check("avtosoyuz")
 
-    # ============ ПРОВЕРКА ARMTEK ============
+    # ============ РџР РћР’Р•Р РљРђ ARMTEK ============
 
     def _check_armtek(self):
-        self.armtek_status.setText("⏳ Проверка...")
+        self.armtek_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.armtek_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("armtek", self._do_check_armtek)
 
@@ -455,7 +455,7 @@ class SettingsPage(QWidget):
         login = self._provider_fields["Armtek"]["login"].text()
         password = self._provider_fields["Armtek"]["password"].text()
         if not login or not password:
-            self._set_status(self.armtek_status, False, "Логин/пароль пусты")
+            self._set_status(self.armtek_status, False, "Р›РѕРіРёРЅ/РїР°СЂРѕР»СЊ РїСѓСЃС‚С‹")
             self._enable_check("armtek")
             return
         import base64
@@ -476,17 +476,17 @@ class SettingsPage(QWidget):
             if resp.status_code == 200:
                 self._set_status(self.armtek_status, True)
             elif resp.status_code == 401:
-                self._set_status(self.armtek_status, False, "Неверный логин/пароль")
+                self._set_status(self.armtek_status, False, "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ/РїР°СЂРѕР»СЊ")
             else:
                 self._set_status(self.armtek_status, False, f"HTTP {resp.status_code}")
         except Exception as e:
             self._set_status(self.armtek_status, False, str(e)[:80])
         self._enable_check("armtek")
 
-    # ============ ПРОВЕРКА FORUM-AUTO ============
+    # ============ РџР РћР’Р•Р РљРђ FORUM-AUTO ============
 
     def _check_forum_auto(self):
-        self.forum_auto_status.setText("⏳ Проверка...")
+        self.forum_auto_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.forum_auto_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("forum_auto", self._do_check_forum_auto)
 
@@ -494,7 +494,7 @@ class SettingsPage(QWidget):
         login = self._provider_fields["Forum-Auto"]["login"].text()
         password = self._provider_fields["Forum-Auto"]["password"].text()
         if not login or not password:
-            self._set_status(self.forum_auto_status, False, "Логин/пароль пусты")
+            self._set_status(self.forum_auto_status, False, "Р›РѕРіРёРЅ/РїР°СЂРѕР»СЊ РїСѓСЃС‚С‹")
             self._enable_check("forum_auto")
             return
         try:
@@ -509,7 +509,7 @@ class SettingsPage(QWidget):
             if resp.status_code == 200:
                 data = resp.json()
                 if isinstance(data, dict) and "error" in data:
-                    self._set_status(self.forum_auto_status, False, "Ошибка авторизации")
+                    self._set_status(self.forum_auto_status, False, "РћС€РёР±РєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё")
                 else:
                     self._set_status(self.forum_auto_status, True)
             else:
@@ -518,10 +518,10 @@ class SettingsPage(QWidget):
             self._set_status(self.forum_auto_status, False, str(e)[:80])
         self._enable_check("forum_auto")
 
-    # ============ ПРОВЕРКА MIKADO ============
+    # ============ РџР РћР’Р•Р РљРђ MIKADO ============
 
     def _check_mikado(self):
-        self.mikado_status.setText("⏳ Проверка...")
+        self.mikado_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.mikado_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("mikado", self._do_check_mikado)
 
@@ -529,7 +529,7 @@ class SettingsPage(QWidget):
         login = self._provider_fields["Mikado"]["login"].text()
         password = self._provider_fields["Mikado"]["password"].text()
         if not login or not password:
-            self._set_status(self.mikado_status, False, "Логин/пароль пусты")
+            self._set_status(self.mikado_status, False, "Р›РѕРіРёРЅ/РїР°СЂРѕР»СЊ РїСѓСЃС‚С‹")
             self._enable_check("mikado")
             return
         try:
@@ -548,17 +548,17 @@ class SettingsPage(QWidget):
                 if ip:
                     self._set_status(self.mikado_status, True, f"IP: {ip}")
                 else:
-                    self._set_status(self.mikado_status, False, "Пустой ответ")
+                    self._set_status(self.mikado_status, False, "РџСѓСЃС‚РѕР№ РѕС‚РІРµС‚")
             else:
                 self._set_status(self.mikado_status, False, f"HTTP {resp.status_code}")
         except Exception as e:
             self._set_status(self.mikado_status, False, str(e)[:80])
         self._enable_check("mikado")
 
-    # ============ ПРОВЕРКА ABSTD ============
+    # ============ РџР РћР’Р•Р РљРђ ABSTD ============
 
     def _check_abstd(self):
-        self.abstd_status.setText("⏳ Проверка...")
+        self.abstd_status.setText("вЏі РџСЂРѕРІРµСЂРєР°...")
         self.abstd_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
         self._run_check("abstd", self._do_check_abstd)
 
@@ -566,7 +566,7 @@ class SettingsPage(QWidget):
         login = self._provider_fields["ABSTD"]["login"].text()
         password = self._provider_fields["ABSTD"]["password"].text()
         if not login or not password:
-            self._set_status(self.abstd_status, False, "Логин/пароль пусты")
+            self._set_status(self.abstd_status, False, "Р›РѕРіРёРЅ/РїР°СЂРѕР»СЊ РїСѓСЃС‚С‹")
             self._enable_check("abstd")
             return
         try:
@@ -586,38 +586,38 @@ class SettingsPage(QWidget):
                 if data.get("status") == "OK":
                     agreements = data.get("user_agreements", [])
                     if agreements:
-                        self._set_status(self.abstd_status, True, f"Договоров: {len(agreements)}")
+                        self._set_status(self.abstd_status, True, f"Р”РѕРіРѕРІРѕСЂРѕРІ: {len(agreements)}")
                     else:
-                        self._set_status(self.abstd_status, True, "OK (без договоров)")
+                        self._set_status(self.abstd_status, True, "OK (Р±РµР· РґРѕРіРѕРІРѕСЂРѕРІ)")
                 else:
-                    self._set_status(self.abstd_status, False, data.get("status", "Ошибка"))
+                    self._set_status(self.abstd_status, False, data.get("status", "РћС€РёР±РєР°"))
             elif resp.status_code == 403:
-                self._set_status(self.abstd_status, False, "Неверный логин/пароль")
+                self._set_status(self.abstd_status, False, "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ/РїР°СЂРѕР»СЊ")
             else:
                 self._set_status(self.abstd_status, False, f"HTTP {resp.status_code}")
         except Exception as e:
             self._set_status(self.abstd_status, False, str(e)[:80])
         self._enable_check("abstd")
 
-    # ============ ВСПОМОГАТЕЛЬНЫЕ ДЛЯ ПРОВЕРОК ============
+    # ============ Р’РЎРџРћРњРћР“РђРўР•Р›Р¬РќР«Р• Р”Р›РЇ РџР РћР’Р•Р РћРљ ============
 
     def _run_check(self, provider_name, do_check):
-        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
+        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "РђРІС‚РѕСЃРѕСЋР·", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
         btn = self._check_buttons.get(title_map.get(provider_name))
         if btn:
             btn.setEnabled(False)
         QTimer.singleShot(50, do_check)
 
     def _enable_check(self, provider_name):
-        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
+        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "РђРІС‚РѕСЃРѕСЋР·", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
         btn = self._check_buttons.get(title_map.get(provider_name))
         if btn:
             btn.setEnabled(True)
 
-    # ============ ОПРЕДЕЛЕНИЕ IP ============
+    # ============ РћРџР Р•Р”Р•Р›Р•РќРР• IP ============
 
     def _detect_ip(self):
-        self.btn_detect_ip.setText("⏳")
+        self.btn_detect_ip.setText("вЏі")
         self.btn_detect_ip.setEnabled(False)
         QTimer.singleShot(50, self._do_detect_ip)
 
@@ -628,7 +628,7 @@ class SettingsPage(QWidget):
             resp = s.get("https://api.ipify.org", timeout=5, proxies={"http": None, "https": None})
             if resp.status_code == 200:
                 self.expected_ip.setText(resp.text.strip())
-                self.btn_detect_ip.setText("Определить")
+                self.btn_detect_ip.setText("РћРїСЂРµРґРµР»РёС‚СЊ")
             else:
                 self._detect_ip_error()
         except:
@@ -636,7 +636,7 @@ class SettingsPage(QWidget):
         self.btn_detect_ip.setEnabled(True)
 
     def _detect_ip_error(self):
-        self.btn_detect_ip.setText("✗ Ошибка")
+        self.btn_detect_ip.setText("вњ— РћС€РёР±РєР°")
         self.btn_detect_ip.setStyleSheet("""
             QPushButton { background: #fecaca; color: #dc2626; padding: 4px 12px; font-size: 11px;
                           font-weight: 600; border-radius: 6px; border: none; }
@@ -644,7 +644,7 @@ class SettingsPage(QWidget):
         QTimer.singleShot(1500, self._reset_detect_ip)
 
     def _reset_detect_ip(self):
-        self.btn_detect_ip.setText("Определить")
+        self.btn_detect_ip.setText("РћРїСЂРµРґРµР»РёС‚СЊ")
         self.btn_detect_ip.setStyleSheet("""
             QPushButton { background: #e5e7eb; color: #374151; padding: 4px 12px; font-size: 11px;
                           font-weight: 600; border-radius: 6px; border: none; }
@@ -652,14 +652,14 @@ class SettingsPage(QWidget):
             QPushButton:disabled { background: #e5e7eb; color: #9ca3af; }
         """)
 
-    # ============ СОХРАНЕНИЕ ============
+    # ============ РЎРћРҐР РђРќР•РќРР• ============
 
     def _save(self):
         data = {}
         mapping = {
             "Emex": "emex",
             "Profit-League": "profit_league",
-            "Автосоюз": "avtosoyuz",
+            "РђРІС‚РѕСЃРѕСЋР·": "avtosoyuz",
             "Armtek": "armtek",
             "Forum-Auto": "forum_auto",
             "Mikado": "mikado",
@@ -685,7 +685,7 @@ class SettingsPage(QWidget):
         self.settings_data = data
 
         for btn in [self.btn_save_top, self.btn_save]:
-            btn.setText("✓ Сохранено")
+            btn.setText("вњ“ РЎРѕС…СЂР°РЅРµРЅРѕ")
             btn.setStyleSheet("""
                 QPushButton { background: #2e7d32; color: white; font-size: 14px; font-weight: 700;
                               border-radius: 8px; border: none; }
@@ -695,7 +695,7 @@ class SettingsPage(QWidget):
 
     def _reset_save_buttons(self):
         for btn in [self.btn_save_top, self.btn_save]:
-            btn.setText("Сохранить")
+            btn.setText("РЎРѕС…СЂР°РЅРёС‚СЊ")
             btn.setStyleSheet("""
                 QPushButton { background: #2563eb; color: white; font-size: 14px; font-weight: 700;
                               border-radius: 8px; border: none; }
@@ -705,3 +705,4 @@ class SettingsPage(QWidget):
 
     def get_settings_data(self):
         return self.settings_data
+

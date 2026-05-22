@@ -609,6 +609,15 @@ class SkitchenApp(QMainWindow):
 
     # ============ РњР•РўРћР”Р« ============
 
+    def _get_one_c_config(self):
+        path = get_settings_path()
+        try:
+            with open(path, encoding='utf-8') as f:
+                cfg = json.load(f)
+                return cfg.get('1c', {})
+        except:
+            return {}
+
     def load_settings(self):
         path = get_settings_path()
         _frozen = getattr(sys, 'frozen', False)
@@ -969,6 +978,30 @@ class SkitchenApp(QMainWindow):
                     self.log_signal.emit(f"РћРЁРР‘РљРђ {display_name}: {str(e)}")
                     self.provider_status.emit(display_name, "error")
                 self.progress_signal.emit(int((i + 1) / total * 100))
+                self.results_ready.emit(list(all_results))
+            # Запрос к 1С
+            if getattr(self, 'one_c_enabled', False) and clean_article:
+                self.log_signal.emit("Запрос 1С...")
+                try:
+                    from one_c_provider import OneCProvider
+                    cfg = self._get_one_c_config()
+                    if cfg:
+                        provider_1c = OneCProvider(cfg.get("conn_string", ""), cfg.get("login", ""), cfg.get("password", ""))
+                        one_c_result = provider_1c.get_price(clean_article)
+                        if one_c_result:
+                            all_results.append({
+                                "provider": "1С", "article": clean_article, "brand": "",
+                                "price": float(one_c_result["price"]), "days": 0, "quantity": "0",
+                                "logo": "", "name": one_c_result.get("name", ""),
+                                "dlogo": "", "ref": "", "plogo": "",
+                                "delivery_percent": 0, "multiplicity": 1,
+                                "one_c_price": float(one_c_result["price"])
+                            })
+                            self.log_signal.emit(f"1С: цена {one_c_result['price']:.2f} р.")
+                        else:
+                            self.log_signal.emit("1С: артикул не найден")
+                except Exception as e_1c:
+                    self.log_signal.emit(f"1С: ошибка - {e_1c}")
                 self.results_ready.emit(list(all_results))
             self.search_completed.emit()
         except Exception as e:
