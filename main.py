@@ -45,7 +45,6 @@ try:
     from forum_auto import ForumAutoProvider
     from mikado import MikadoProvider
     from abstd import AbstdProvider
-    from one_c_provider import OneCProvider
     from settings_page import SettingsPage
 except ImportError as e:
     print(f"Ошибка импорта: {e}")
@@ -98,6 +97,7 @@ class SkitchenApp(QMainWindow):
         except Exception:
             pass
         self.load_settings()
+        
         # Запуск проверки обновлений через 2 секунды после старта
         QTimer.singleShot(2000, self.check_for_updates)
 
@@ -409,9 +409,8 @@ class SkitchenApp(QMainWindow):
 
         # 3. ТАБЛИЦА
         self.table = QTableWidget()
-        self.table.setColumnCount(10)
-        self.table.setHorizontalHeaderLabels(["ПОСТАВЩИК", "БРЕНД", "АРТИКУЛ", "ЦЕНА", "СРОК", "ПОСТ.,%", "КОЛ-ВО", "СКЛАД", "НАЗВАНИЕ", "Цена в 1С"])
-        self.one_c_col = 9
+        self.table.setColumnCount(9)
+        self.table.setHorizontalHeaderLabels(["ПОСТАВЩИК", "БРЕНД", "АРТИКУЛ", "ЦЕНА", "СРОК", "ПОСТ.,%", "КОЛ-ВО", "СКЛАД", "НАЗВАНИЕ"])
         self.table.setColumnWidth(0, 110)
         self.table.setColumnWidth(1, 120)
         self.table.setColumnWidth(2, 100)
@@ -610,13 +609,6 @@ class SkitchenApp(QMainWindow):
 
     # ============ МЕТОДЫ ============
 
-    def _get_one_c_config(self):
-        try:
-            with open(get_settings_path(), encoding="utf-8") as f:
-                return json.load(f).get("1c", {})
-        except:
-            return {}
-
     def load_settings(self):
         path = get_settings_path()
         _frozen = getattr(sys, 'frozen', False)
@@ -650,7 +642,6 @@ class SkitchenApp(QMainWindow):
         ar = cfg.get("armtek", {})
         fa = cfg.get("forum_auto", {})
         mk = cfg.get("mikado", {})
-        one_c = cfg.get("1c", {"enabled": False})
         self.providers = []
         if e.get("enabled", True):
             login_val = e.get("login", "")
@@ -682,7 +673,6 @@ class SkitchenApp(QMainWindow):
                 MikadoProvider(mk["login"], mk["password"])
             )
         ab = cfg.get("abstd", {})
-        self.one_c_enabled = one_c.get("enabled", False) and bool(one_c.get("file_path"))
         if ab.get("enabled", True) and ab.get("login") and ab.get("password") and ab.get("agreement_id"):
             self.providers.append(
                 AbstdProvider(ab["login"], ab["password"], ab["agreement_id"])
@@ -980,34 +970,6 @@ class SkitchenApp(QMainWindow):
                     self.provider_status.emit(display_name, "error")
                 self.progress_signal.emit(int((i + 1) / total * 100))
                 self.results_ready.emit(list(all_results))
-            # 1C query
-            if getattr(self, "one_c_enabled", False) and clean_article:
-                self.log_signal.emit("Запрос 1С...")
-                try:
-                    cfg = self._get_one_c_config()
-                    if cfg:
-                        file_path = cfg.get("file_path", "")
-                        if file_path and os.path.exists(file_path):
-                            import json
-                            with open(file_path, "r", encoding="utf-8") as pf:
-                                price_data = json.load(pf)
-                            for entry in price_data:
-                                if str(entry.get("article", "")).upper() == clean_article:
-                                    all_results.append({
-                                        "provider": "1С", "article": clean_article, "brand": "",
-                                        "price": float(entry["price"]), "days": 0, "quantity": "0",
-                                        "logo": "", "name": entry.get("name", ""),
-                                        "dlogo": "", "ref": "", "plogo": "",
-                                        "delivery_percent": 0, "multiplicity": 1,
-                                        "one_c_price": float(entry["price"])
-                                    })
-                                    self.log_signal.emit(f"1С: цена {entry["price"]} р.")
-                                    break
-                            else:
-                                self.log_signal.emit("1С: артикул не найден")
-                except Exception as e_1c:
-                    self.log_signal.emit(f"1С: ошибка - {e_1c}")
-                self.results_ready.emit(list(all_results))
             self.search_completed.emit()
         except Exception as e:
             self.log_signal.emit(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
@@ -1063,15 +1025,6 @@ class SkitchenApp(QMainWindow):
             self.table.setItem(row, 6, QTableWidgetItem(display_qty))
             self.table.setItem(row, 7, QTableWidgetItem(str(item.get("logo", "-"))))
             self.table.setItem(row, 8, QTableWidgetItem(str(item["name"])))
-            # 1C price column (9)
-            one_c_price = item.get("one_c_price")
-            if one_c_price is not None:
-                one_c_item = NumericTableWidgetItem(f"{one_c_price:.2f} р.")
-                one_c_item.setForeground(QColor("#2563eb"))
-                one_c_item.setFont(QFont("", -1, 700))
-                self.table.setItem(row, 9, one_c_item)
-            else:
-                self.table.setItem(row, 9, QTableWidgetItem(""))
 
             for col in range(self.table.columnCount()):
                 cell = self.table.item(row, col)
@@ -1141,12 +1094,6 @@ class SkitchenApp(QMainWindow):
             # СКЛАД
             wh_cell = self.table.item(row, 7)
             if wh_cell and provider == "Profit-League":
-                wh_name = str(item.get("logo", ""))
-                color_idx = abs(hash(wh_name)) % len(warehouse_colors)
-                wh_cell.setForeground(QColor(warehouse_colors[color_idx]))
-                wh_cell.setFont(QFont("", -1, 700))
-
-            if wh_cell and provider == "Автосоюз":
                 wh_name = str(item.get("logo", ""))
                 color_idx = abs(hash(wh_name)) % len(warehouse_colors)
                 wh_cell.setForeground(QColor(warehouse_colors[color_idx]))
