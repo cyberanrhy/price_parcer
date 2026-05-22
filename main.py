@@ -98,13 +98,6 @@ class SkitchenApp(QMainWindow):
         except Exception:
             pass
         self.load_settings()
-
-        # 1C column visibility
-        if getattr(self, "one_c_enabled", False):
-            self.table.setColumnHidden(9, False)
-        else:
-            self.table.setColumnHidden(9, True)
-        
         # Запуск проверки обновлений через 2 секунды после старта
         QTimer.singleShot(2000, self.check_for_updates)
 
