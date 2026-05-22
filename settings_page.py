@@ -38,7 +38,6 @@ class SettingsPage(QWidget):
             "forum_auto": {"enabled": True, "login": "", "password": ""},
             "mikado": {"enabled": True, "login": "", "password": ""},
             "abstd": {"enabled": True, "login": "", "password": "", "agreement_id": ""},
-            "1c": {"enabled": False, "file_path": ""},
             "default_markup": 0,
             "default_comment": "",
             "expected_ip": "",
@@ -218,11 +217,6 @@ class SettingsPage(QWidget):
             ("agreement_id", "ID договора:", "text"),
         ], check_method=self._check_abstd, status_attr="abstd_status")
 
-        # 1С
-        self._add_provider_card(layout, "1С", [
-            ("file_path", "Путь к файлу цен JSON:", "text"),
-        ], check_method=self._check_1c, status_attr="one_c_status")
-
         # --- Хранилище ---
         self._add_section_header(layout, "ХРАНИЛИЩЕ")
         storage_label = QLabel("● JSON файл")
@@ -344,8 +338,7 @@ class SettingsPage(QWidget):
             "Armtek": "armtek",
             "Forum-Auto": "forum_auto",
             "Mikado": "mikado",
-            "ABSTD": "abstd",,
-            "1С": "1c"
+            "ABSTD": "abstd",
         }
         for display_name, cfg_key in mapping.items():
             cfg = self.settings_data.get(cfg_key, {})
@@ -606,44 +599,17 @@ class SettingsPage(QWidget):
             self._set_status(self.abstd_status, False, str(e)[:80])
         self._enable_check("abstd")
 
-    # ============ ПРОВЕРКА 1С ============
-
-    def _check_1c(self):
-        self.one_c_status.setText("⏳ Проверка...")
-        self.one_c_status.setStyleSheet("font-size: 12px; color: #f57c00; font-weight: 600;")
-        self._run_check("1c", self._do_check_1c)
-
-    def _do_check_1c(self):
-        try:
-            file_path = self._provider_fields["1С"]["file_path"].text()
-            if not file_path:
-                self._set_status(self.one_c_status, False, "Укажите путь к файлу")
-                self._enable_check("1c")
-                return
-            if os.path.exists(file_path):
-                with open(file_path, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                if isinstance(data, list):
-                    self._set_status(self.one_c_status, True, f"OK: {len(data)} позиций")
-                else:
-                    self._set_status(self.one_c_status, False, "Неверный формат файла")
-            else:
-                self._set_status(self.one_c_status, False, "Файл не найден")
-        except Exception as e:
-            self._set_status(self.one_c_status, False, str(e)[:60])
-        self._enable_check("1c")
-
     # ============ ВСПОМОГАТЕЛЬНЫЕ ДЛЯ ПРОВЕРОК ============
 
     def _run_check(self, provider_name, do_check):
-        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD", "1c": "1С"}
+        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
         btn = self._check_buttons.get(title_map.get(provider_name))
         if btn:
             btn.setEnabled(False)
         QTimer.singleShot(50, do_check)
 
     def _enable_check(self, provider_name):
-        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD", "1c": "1С"}
+        title_map = {"emex": "Emex", "profit_league": "Profit-League", "avtosoyuz": "Автосоюз", "armtek": "Armtek", "forum_auto": "Forum-Auto", "mikado": "Mikado", "abstd": "ABSTD"}
         btn = self._check_buttons.get(title_map.get(provider_name))
         if btn:
             btn.setEnabled(True)
@@ -697,8 +663,7 @@ class SettingsPage(QWidget):
             "Armtek": "armtek",
             "Forum-Auto": "forum_auto",
             "Mikado": "mikado",
-            "ABSTD": "abstd",,
-            "1С": "1c"
+            "ABSTD": "abstd",
         }
         for display_name, cfg_key in mapping.items():
             cfg = {}
