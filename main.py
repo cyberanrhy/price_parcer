@@ -1245,7 +1245,7 @@ class SkitchenApp(QMainWindow):
         try:
             result = provider.add_to_basket(item, quantity=qty, comment=comment)
             if result.get("success"):
-                self.log_signal.emit(f"УСПЕХ: товар добавлен в корзину — {result.get('data', 'OK')}")
+                self.log_signal.emit(f"УСПЕХ: {result.get('data', 'OK')}")
             else:
                 self.log_signal.emit(f"ОШИБКА: {result.get('error', 'неизвестная ошибка')}")
         except Exception as e:

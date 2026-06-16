@@ -74,9 +74,9 @@ class EmexProvider:
                 MName=item.get("brand", ""),
                 MLogo="",
                 DNum=item.get("article", ""),
-                Ref=item.get("ref", ""),
+                Ref=comment[:255] if comment.strip() else item.get("ref", ""),
                 Name=item.get("name", ""),
-                Comment=comment[:255],
+                Com="",
 
                 Quan=str(quantity),
                 Price=str(item.get("price", "0")),
@@ -92,6 +92,14 @@ class EmexProvider:
                 ePrices=ArrayOfEPrice([eprice])
             )
 
+            if result and len(result) > 0:
+                resp = result[0]
+                error_code = getattr(resp, 'ErrorMessageCode', -1)
+                if error_code != 0:
+                    err_msg = getattr(resp, 'Comment', 'ошибка ' + str(error_code))
+                    return {"success": False, "error": err_msg}
+                global_id = getattr(resp, 'GlobalId', '')
+                return {"success": True, "data": "С‚РѕРІР°СЂ РґРѕР±Р°РІР»РµРЅ РІ РєРѕСЂР·РёРЅСѓ, GlobalId=" + str(global_id)}
             return {"success": True, "data": "С‚РѕРІР°СЂ РґРѕР±Р°РІР»РµРЅ РІ РєРѕСЂР·РёРЅСѓ"}
 
         except Exception as e:
