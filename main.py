@@ -9,7 +9,7 @@ import requests
 from PyQt6.QtCore import Qt, pyqtSignal, QRectF, QTimer, QUrl
 from PyQt6.QtGui import QColor, QFont, QPainter, QPen, QDesktopServices
 
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
 from config_path import get_settings_path, get_history_path, get_config_dir
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
